@@ -22,7 +22,7 @@ Route::middleware("api")->group(function(){
         Route::post("store", "storeOwner");
     });
 
-    Route::prefix("cashiers")->controller(UserController::class)->group(function(){
+    Route::prefix("cashiers")->controller(UserController::class)->middleware("auth:sanctum")->group(function(){
         Route::post("store", "storeCashier");
     });
 

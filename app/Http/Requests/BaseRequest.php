@@ -17,9 +17,9 @@ class BaseRequest extends FormRequest
         return true;
     }
 
-    public function failedValidation(Validator $validator)
+    protected function failedValidation(Validator $validator)
     {
-        return $this->res(422, "Failed Validation", $validator->errors());
+        throw new \Illuminate\Validation\ValidationException($validator, $this->res(422, "Failed Validation", $validator->errors()));
     }
 
 }
