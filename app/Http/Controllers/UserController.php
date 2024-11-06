@@ -11,9 +11,29 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class UserController extends Controller
 {
+
+    public function listOwner()
+    {
+        try {
+            $owners = User::where("role", Role::owner->value)->paginate(10);
+            return $this->res(200, "Owners", $owners);
+        } catch (HttpException $th) {
+            return $this->res($th->getStatusCode(), $th->getMessage());
+        }
+    }
+
+    public function listCashier()
+    {
+        try {
+            $cashiers = User::where("role", Role::cashier->value)->paginate(10);
+            return $this->res(200, "Cashiers", $cashiers);
+        } catch (HttpException $th) {
+            return $this->res($th->getStatusCode(), $th->getMessage());
+        }
+    }
+
     public function storeOwner(OwnerStoreRequest $req)
     {
-        dd($req->validated());
         try {
             $data = $req->validated();
             $data['role'] = Role::owner->value;
